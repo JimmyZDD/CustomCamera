@@ -86,6 +86,8 @@
 
 @implementation MyCameraController
 
+#pragma mark -- viewController 一些方法
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -122,9 +124,12 @@
     [self initfocusImageWithParent:_preview];
     
     if (_canFaceRecognition) {
-        [self initFaceImageWithParent:_preview];
+//        [self initFaceImageWithParent:_preview];
     }
 }
+
+#pragma mark -- 配置相机相关组件
+
 
 /**
  *  创建一个队列，防止阻塞主线程
@@ -133,6 +138,7 @@
     dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
     self.sessionQueue = sessionQueue;
 }
+
 /**
  *  对焦的框
  */
@@ -152,11 +158,13 @@
         self.focusImageView = nil;
     }
 }
-/**
+/*
+
+**
  *  脸部识别的框
  *
  *  @param view
- */
+ *
 - (void)initFaceImageWithParent:(UIView *)view;
 {
     if (self.faceImageView) {
@@ -173,7 +181,7 @@
         self.faceImageView = nil;
     }
 }
-
+*/
 
 #pragma mark -- 初始化所有对象
 /**
@@ -182,13 +190,14 @@
 - (void)initAVCapture {
     self.session = [AVCaptureSession new];
     
-    
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     [device lockForConfiguration:nil];
     //闪光灯（自动）
     [device setFlashMode:AVCaptureFlashModeAuto];
-    [device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
-     
+    // 是否手动对焦
+    if (!_isManualFocus) {
+        [device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+    }
     [device unlockForConfiguration];
     NSError *error = nil;
     self.videoInput = [[AVCaptureDeviceInput alloc]initWithDevice:device error:&error];
@@ -208,7 +217,7 @@
     if ([_session canAddOutput:_stillImageOutput])
         [_session addOutput:_stillImageOutput];
     if (_canFaceRecognition) {
-        [self addMetadataOutputTypeFace];
+//        [self addMetadataOutputTypeFace];
     }
     
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc]initWithSession:_session];
@@ -220,15 +229,16 @@
 /**
  *  添加 可以检索从设备上支持人脸检测的avcapturemetadataoutput对象输出该类的实例。
  */
-- (void)addMetadataOutputTypeFace {
-    AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
-    if ([_session canAddOutput:metadataOutput]) {
-        [_session addOutput:metadataOutput];
-        [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
-        [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-        self.metadataOutput = metadataOutput;
-    }
-}
+//
+//- (void)addMetadataOutputTypeFace {
+//    AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
+//    if ([_session canAddOutput:metadataOutput]) {
+//        [_session addOutput:metadataOutput];
+//        [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
+//        [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+//        self.metadataOutput = metadataOutput;
+//    }
+//}
 
 #pragma mark -- 拍照按钮点击事件
 
@@ -458,8 +468,32 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
             }];
         }];
     }
-    
 }
+
+- (IBAction)captureSessionPreset:(UISegmentedControl *)sender {
+    NSLog(@"%d",sender.selectedSegmentIndex);
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            if ([_session canSetSessionPreset:AVCaptureSessionPresetHigh]) {
+                [_session setSessionPreset:AVCaptureSessionPresetHigh];
+            }
+            break;
+        case 1:
+            if ([_session canSetSessionPreset:AVCaptureSessionPresetMedium]) {
+                [_session setSessionPreset:AVCaptureSessionPresetMedium];
+            }
+            break;
+        case 2:
+            if ([_session canSetSessionPreset:AVCaptureSessionPresetLow]) {
+                [_session setSessionPreset:AVCaptureSessionPresetLow];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

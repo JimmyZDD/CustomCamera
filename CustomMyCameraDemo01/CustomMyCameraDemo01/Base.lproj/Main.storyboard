@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -32,17 +33,25 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="yoC-Wb-ujB">
-                        <barButtonItem key="rightBarButtonItem" title="Camera" id="Pgu-DL-OKN">
-                            <connections>
-                                <action selector="gotoCamera:" destination="BYZ-38-t0r" id="HSc-2m-TKa"/>
-                                <segue destination="oVI-Rz-onr" kind="show" id="Fmg-uj-OOa"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Camera" id="Pgu-DL-OKN">
+                                <connections>
+                                    <action selector="gotoCamera:" destination="BYZ-38-t0r" id="HSc-2m-TKa"/>
+                                    <segue destination="oVI-Rz-onr" kind="show" id="Fmg-uj-OOa"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="       " id="lOP-pr-GxU"/>
+                            <barButtonItem title="Record" id="egC-JV-ojr">
+                                <connections>
+                                    <segue destination="LDo-ny-PcH" kind="show" id="vf6-eK-gPb"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="350" y="397"/>
+            <point key="canvasLocation" x="-286" y="74"/>
         </scene>
         <!--My Camera Controller-->
         <scene sceneID="bw5-U7-5zn">
@@ -59,7 +68,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qgO-CI-Hw5">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="返回" id="D3f-T7-gOl">
+                                    <barButtonItem title="返 回" id="D3f-T7-gOl">
                                         <connections>
                                             <action selector="backBarButtonClick:" destination="oVI-Rz-onr" id="a3e-lM-yK1"/>
                                         </connections>
@@ -85,7 +94,20 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nlp-bO-w7C" userLabel="BottomToolbar">
                                 <rect key="frame" x="0.0" y="436" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="   " id="aA4-Ux-EZ9"/>
+                                    <barButtonItem style="plain" id="jY3-gd-pWl">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="LwN-Og-wMT">
+                                            <rect key="frame" x="20" y="7" width="170" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Full"/>
+                                                <segment title="Medium"/>
+                                                <segment title="Low"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="captureSessionPreset:" destination="oVI-Rz-onr" eventType="valueChanged" id="cRB-LG-PA6"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="qoQ-CY-Y0d"/>
                                     <barButtonItem title="拍照" id="Tb4-3j-Xae">
                                         <connections>
@@ -98,6 +120,7 @@
                                             <action selector="gotoAlbum:" destination="oVI-Rz-onr" id="Uze-wg-X0E"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem width="9" style="plain" systemItem="fixedSpace" id="vVm-jb-Ymi"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -125,7 +148,78 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kji-kI-Gt9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="462" y="423"/>
+            <point key="canvasLocation" x="528" y="8"/>
+        </scene>
+        <!--My Movie Record Controller-->
+        <scene sceneID="vKm-pw-d3K">
+            <objects>
+                <viewController id="LDo-ny-PcH" customClass="MyMovieRecordController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zzf-2I-AP8"/>
+                        <viewControllerLayoutGuide type="bottom" id="4Zv-Ar-lTv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lXY-vd-77M" customClass="My">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWo-hN-G7P" userLabel="focusCursor">
+                                <rect key="frame" x="287" y="382" width="80" height="80"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wwX-gw-b3j" userLabel="viewContainer">
+                                <rect key="frame" x="0.0" y="40" width="600" height="369"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cw5-HH-MA0">
+                                <rect key="frame" x="0.0" y="477" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="返回" id="njS-Al-cNn">
+                                        <connections>
+                                            <action selector="backButtonClick:" destination="LDo-ny-PcH" id="MZS-hD-Jm0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="5h2-5G-qgl"/>
+                                    <barButtonItem style="plain" id="eRD-W9-Skr">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NIi-5M-bSP" userLabel="takeButton">
+                                            <rect key="frame" x="270" y="0.0" width="60" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="1" green="0.5100471567" blue="0.24530558020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="录制视频"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="uHZ-60-h36"/>
+                                    <barButtonItem style="plain" id="9SX-ww-DWA">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b4O-K0-0Rj">
+                                            <rect key="frame" x="505" y="7" width="75" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="切换摄像头"/>
+                                            <connections>
+                                                <action selector="toggleButtonClick:" destination="LDo-ny-PcH" eventType="touchUpInside" id="FgE-Yu-avM"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="top" secondItem="Zzf-2I-AP8" secondAttribute="bottom" id="6wa-tT-eKt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wwX-gw-b3j" secondAttribute="trailing" constant="-20" id="B7r-cB-nn3"/>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="bottom" secondItem="Cw5-HH-MA0" secondAttribute="bottom" id="GBq-J8-rIZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cw5-HH-MA0" secondAttribute="trailing" constant="-20" id="NgA-Rb-VAr"/>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="leading" secondItem="lXY-vd-77M" secondAttribute="leadingMargin" constant="-20" id="WHH-CS-956"/>
+                            <constraint firstItem="4Zv-Ar-lTv" firstAttribute="top" secondItem="Cw5-HH-MA0" secondAttribute="bottom" id="WNg-Ud-nf6"/>
+                            <constraint firstItem="Cw5-HH-MA0" firstAttribute="leading" secondItem="lXY-vd-77M" secondAttribute="leadingMargin" constant="-20" id="psl-gB-ly9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="focusCursor" destination="hWo-hN-G7P" id="Rlh-nw-FSu"/>
+                        <outlet property="takeButton" destination="NIi-5M-bSP" id="p1y-Fk-JEC"/>
+                        <outlet property="viewContainer" destination="wwX-gw-b3j" id="FQ3-Oc-qKi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FU6-MD-OpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="48" y="794"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E5Q-hl-HWN">
@@ -143,7 +237,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lEj-1l-zoy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-389" y="442"/>
+            <point key="canvasLocation" x="-1129" y="74"/>
         </scene>
     </scenes>
 </document>
