@@ -14,7 +14,6 @@
 		F8F8FA8C1D235A7200BCE09F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8F8FA8B1D235A7200BCE09F /* Assets.xcassets */; };
 		F8F8FA8F1D235A7200BCE09F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8F8FA8D1D235A7200BCE09F /* LaunchScreen.storyboard */; };
 		F8F8FA991D235BD900BCE09F /* MyCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F8FA981D235BD900BCE09F /* MyCameraController.m */; };
-		F8F8FA9B1D23BA9400BCE09F /* img.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F8F8FA9A1D23BA9400BCE09F /* img.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +29,6 @@
 		F8F8FA901D235A7200BCE09F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8F8FA971D235BD900BCE09F /* MyCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCameraController.h; sourceTree = "<group>"; };
 		F8F8FA981D235BD900BCE09F /* MyCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCameraController.m; sourceTree = "<group>"; };
-		F8F8FA9A1D23BA9400BCE09F /* img.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = img.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +86,6 @@
 		F8F8FA961D235BC100BCE09F /* CustomCamera */ = {
 			isa = PBXGroup;
 			children = (
-				F8F8FA9A1D23BA9400BCE09F /* img.bundle */,
 				F8F8FA971D235BD900BCE09F /* MyCameraController.h */,
 				F8F8FA981D235BD900BCE09F /* MyCameraController.m */,
 			);
@@ -156,7 +153,6 @@
 				F8F8FA8F1D235A7200BCE09F /* LaunchScreen.storyboard in Resources */,
 				F8F8FA8C1D235A7200BCE09F /* Assets.xcassets in Resources */,
 				F8F8FA8A1D235A7200BCE09F /* Main.storyboard in Resources */,
-				F8F8FA9B1D23BA9400BCE09F /* img.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +317,7 @@
 				F8F8FA951D235A7200BCE09F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

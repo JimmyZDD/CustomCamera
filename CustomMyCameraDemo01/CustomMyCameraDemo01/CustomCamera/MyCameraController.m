@@ -44,6 +44,16 @@
  */
 @property (nonatomic, strong) AVCaptureMetadataOutput *metadataOutput;
 /**
+ *  对焦的框
+ */
+@property (nonatomic, strong) UIImageView *focusImageView;
+/**
+ *  人脸识别框
+ */
+@property (nonatomic, strong) UIImageView *faceImageView;
+
+
+/**
  *  previewLayer
  */
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
@@ -62,6 +72,8 @@
  *  记录（record） CameraPostion
  */
 @property (nonatomic, assign) BOOL isUsingFrontFacingCamera;
+
+@property (nonatomic, assign) BOOL isStartFaceRecognition;
 
 /**
  *  读取系统相册
@@ -106,6 +118,12 @@
     [self setupImagePicker];
     
     [self setupPinchGesture];
+    
+    [self initfocusImageWithParent:_preview];
+    
+    if (_canFaceRecognition) {
+        [self initFaceImageWithParent:_preview];
+    }
 }
 
 /**
@@ -114,6 +132,46 @@
 - (void)createQueue {
     dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
     self.sessionQueue = sessionQueue;
+}
+/**
+ *  对焦的框
+ */
+- (void)initfocusImageWithParent:(UIView *)view;
+{
+    if (self.focusImageView) {
+        return;
+    }
+    self.focusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"touch_focus_x.png"]];
+    self.focusImageView.hidden = YES;
+//    _focusImageView.backgroundColor = [UIColor redColor];
+    _focusImageView.bounds = CGRectMake(0, 0, 100, 100);
+    if (view.superview!=nil) {
+        [self.view bringSubviewToFront:_focusImageView];
+        [view.superview addSubview:self.focusImageView];
+    }else{
+        self.focusImageView = nil;
+    }
+}
+/**
+ *  脸部识别的框
+ *
+ *  @param view
+ */
+- (void)initFaceImageWithParent:(UIView *)view;
+{
+    if (self.faceImageView) {
+        return;
+    }
+    self.faceImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"face.png"]];
+    self.faceImageView.alpha = 0;
+    if (view.superview) {
+        [view.superview addSubview:self.faceImageView];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int32_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.isStartFaceRecognition = YES;
+        });
+    }else{
+        self.faceImageView = nil;
+    }
 }
 
 
@@ -127,7 +185,10 @@
     
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     [device lockForConfiguration:nil];
+    //闪光灯（自动）
     [device setFlashMode:AVCaptureFlashModeAuto];
+    [device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+     
     [device unlockForConfiguration];
     NSError *error = nil;
     self.videoInput = [[AVCaptureDeviceInput alloc]initWithDevice:device error:&error];
@@ -156,7 +217,9 @@
     _preview.layer.masksToBounds = YES;
     [_preview.layer addSublayer:_previewLayer];
 }
-
+/**
+ *  添加 可以检索从设备上支持人脸检测的avcapturemetadataoutput对象输出该类的实例。
+ */
 - (void)addMetadataOutputTypeFace {
     AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
     if ([_session canAddOutput:metadataOutput]) {
@@ -356,7 +419,47 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
         [CATransaction commit];
     }
 }
+#pragma mark -- 手动对焦
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    for (UITouch *touch in touches) {
+        CGPoint point = [touch locationInView:_preview];
+        [self focusAtPoint:point];
+    }
+}
+- (void)focusAtPoint:(CGPoint)point{
+    CGSize size = self.view.bounds.size;
+    CGPoint focusPoint = CGPointMake( point.y /size.height ,1-point.x/size.width );
+    NSError *error;
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 
+    if ([device lockForConfiguration:&error]) {
+        //对焦模式和对焦点
+        if ([device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            [device setFocusPointOfInterest:focusPoint];
+            [device setFocusMode:AVCaptureFocusModeAutoFocus];
+        }
+        //曝光模式和曝光点
+        if ([device isExposureModeSupported:AVCaptureExposureModeAutoExpose ]) {
+            [device setExposurePointOfInterest:focusPoint];
+            [device setExposureMode:AVCaptureExposureModeAutoExpose];
+        }
+        
+        [device unlockForConfiguration];
+        //设置对焦动画
+        _focusImageView.center = point;
+        _focusImageView.hidden = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            _focusImageView.transform = CGAffineTransformMakeScale(1.25, 1.25);
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.5 animations:^{
+                _focusImageView.transform = CGAffineTransformIdentity;
+            } completion:^(BOOL finished) {
+                _focusImageView.hidden = YES;
+            }];
+        }];
+    }
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
