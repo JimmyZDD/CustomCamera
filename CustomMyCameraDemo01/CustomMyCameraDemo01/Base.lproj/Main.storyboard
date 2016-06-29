@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Kql-PQ-YOA">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dP9-mt-KxX">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" red="1" green="0.78392627520000002" blue="0.69157196990000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dP9-mt-KxX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="AkA-24-hYO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dP9-mt-KxX" secondAttribute="trailing" constant="-20" id="e5t-pj-p6S"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dP9-mt-KxX" secondAttribute="bottom" id="eja-Sp-HbT"/>
+                            <constraint firstItem="dP9-mt-KxX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="zWD-1Y-731"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="yoC-Wb-ujB">
+                        <barButtonItem key="rightBarButtonItem" title="Camera" id="Pgu-DL-OKN">
+                            <connections>
+                                <action selector="gotoCamera:" destination="BYZ-38-t0r" id="HSc-2m-TKa"/>
+                                <segue destination="oVI-Rz-onr" kind="show" id="Fmg-uj-OOa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="350" y="397"/>
+        </scene>
+        <!--My Camera Controller-->
+        <scene sceneID="bw5-U7-5zn">
+            <objects>
+                <viewController id="oVI-Rz-onr" customClass="MyCameraController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uqa-rg-V01"/>
+                        <viewControllerLayoutGuide type="bottom" id="s2E-05-TIe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nQe-T8-baI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qgO-CI-Hw5">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="返回" id="D3f-T7-gOl">
+                                        <connections>
+                                            <action selector="backBarButtonClick:" destination="oVI-Rz-onr" id="a3e-lM-yK1"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lMh-K8-Uuq"/>
+                                    <barButtonItem title="前置摄像头" id="ZNH-fY-71X">
+                                        <connections>
+                                            <action selector="switchCameraPostion:" destination="oVI-Rz-onr" id="iua-la-cuF"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="1qL-mx-FuG"/>
+                                    <barButtonItem title="闪光灯" id="ApS-bt-qOo">
+                                        <connections>
+                                            <action selector="flashButtonClick:" destination="oVI-Rz-onr" id="e3o-NQ-ce6"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-7y-yFj">
+                                <rect key="frame" x="0.0" y="171" width="600" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nlp-bO-w7C" userLabel="BottomToolbar">
+                                <rect key="frame" x="0.0" y="436" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="   " id="aA4-Ux-EZ9"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="qoQ-CY-Y0d"/>
+                                    <barButtonItem title="拍照" id="Tb4-3j-Xae">
+                                        <connections>
+                                            <action selector="takePhoto:" destination="oVI-Rz-onr" id="HEp-dk-u4b"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="X3v-9l-bv8"/>
+                                    <barButtonItem title="相册" id="1jb-MV-c0y">
+                                        <connections>
+                                            <action selector="gotoAlbum:" destination="oVI-Rz-onr" id="Uze-wg-X0E"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="width" secondItem="nQe-T8-baI" secondAttribute="width" id="Dq1-qy-5RM"/>
+                            <constraint firstItem="4fv-7y-yFj" firstAttribute="top" secondItem="qgO-CI-Hw5" secondAttribute="bottom" id="G4A-Fi-KmC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qgO-CI-Hw5" secondAttribute="trailing" constant="-20" id="KGs-St-9aK"/>
+                            <constraint firstItem="s2E-05-TIe" firstAttribute="top" secondItem="nlp-bO-w7C" secondAttribute="bottom" id="Q8u-pH-UE1"/>
+                            <constraint firstItem="4fv-7y-yFj" firstAttribute="leading" secondItem="nQe-T8-baI" secondAttribute="leadingMargin" constant="-20" id="W2Y-n4-gSZ"/>
+                            <constraint firstItem="nlp-bO-w7C" firstAttribute="leading" secondItem="nQe-T8-baI" secondAttribute="leadingMargin" constant="-20" id="jzN-lB-8BY"/>
+                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="top" secondItem="uqa-rg-V01" secondAttribute="bottom" id="mh6-Tz-D63"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4fv-7y-yFj" secondAttribute="trailing" constant="-20" id="pDK-1z-z87"/>
+                            <constraint firstItem="nlp-bO-w7C" firstAttribute="top" secondItem="4fv-7y-yFj" secondAttribute="bottom" id="s3w-sJ-r10"/>
+                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="leading" secondItem="nQe-T8-baI" secondAttribute="leadingMargin" constant="-20" id="wWb-Ev-vsc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nlp-bO-w7C" secondAttribute="trailing" constant="-20" id="ybc-24-Opw"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="preview" destination="4fv-7y-yFj" id="nHU-QD-1WL"/>
+                        <outlet property="topToolBar" destination="qgO-CI-Hw5" id="TaP-f8-ZB2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kji-kI-Gt9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="462" y="423"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="E5Q-hl-HWN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kql-PQ-YOA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Mft-66-Kh5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="IQa-2g-tl4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lEj-1l-zoy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-389" y="442"/>
+        </scene>
+    </scenes>
+</document>
