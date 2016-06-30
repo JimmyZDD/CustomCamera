@@ -20,4 +20,9 @@
  */
 @property (nonatomic, assign) BOOL isManualFocus;
 
+/**
+ *  是否开启拍照后yulan
+ */
+@property (nonatomic, assign) BOOL isPreviewImg;
+
 @end

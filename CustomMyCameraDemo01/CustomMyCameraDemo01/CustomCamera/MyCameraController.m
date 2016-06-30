@@ -113,14 +113,28 @@
 #pragma mark -- viewController 一些方法
 
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.isPreviewImg = YES;
+        self.isManualFocus = NO;
+    }
+    return self;
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [_device removeObserver:self forKeyPath:@"adjustingFocus"];
+    
     // 关闭 session
     if (self.session) [self.session stopRunning];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [_device addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     
@@ -145,6 +159,8 @@
     
     [self setupPinchGesture];
     
+    [self setupTapGesture];
+    
     [self initfocusImageWithParent:_preview];
     
     if (_canFaceRecognition) {
@@ -152,6 +168,21 @@
     }
     
     [self initScaleLabel];
+}
+
+#pragma mark -- 监听对焦事件
+
+-(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context {
+    if([keyPath isEqualToString:@"adjustingFocus"]){
+        BOOL adjustingFocus =[[change objectForKey:NSKeyValueChangeNewKey] isEqualToNumber:[NSNumber numberWithInt:1]];
+        LOG(@"Is adjusting focus? %@", adjustingFocus ?@"YES":@"NO");
+        LOG(@"Change dictionary: %@", change);
+    }
+}
+
+- (IBAction)switchPreviewOrientation:(UISwitch *)sender {
+    
+    
 }
 
 #pragma mark -- 配置相机相关组件
@@ -324,7 +355,7 @@
         /**
          *  是否拍照后预览
          */
-        if (1)
+        if (_isPreviewImg)
         {
             imgView = [[UIView alloc]initWithFrame:self.view.frame];
             imgView.clipsToBounds = YES;
@@ -505,33 +536,44 @@
     }
 }
 #pragma mark -- 手动对焦
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    for (UITouch *touch in touches) {
-        CGPoint point = [touch locationInView:_preview];
-        [self focusAtPoint:point];
-    }
+
+
+- (void)setupTapGesture {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     
+    [self.preview addGestureRecognizer:tap];
+}
+- (void)tapAction:(UITapGestureRecognizer *)tap {
+    
+    CGPoint point = [tap locationInView:_preview];
+    [self focusAtPoint:point];
     
 }
 - (void)focusAtPoint:(CGPoint)point{
-    CGSize size = self.view.bounds.size;
-    CGPoint focusPoint = CGPointMake( point.y /size.height ,1-point.x/size.width );
-    NSError *error;
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    CGSize size = _previewLayer.bounds.size;
     
-    if ([device lockForConfiguration:&error]) {
+    /**
+     *  setExposurePointOfInterest：focusPoint 函数后面Point取值范围是取景框左上角（0，0）到取景框右下角（1，1）之间。官方是这么写的：
+     *我也试了按这个来但位置就是不对，只能按上面的写法才可以。前面是点击位置的y/PreviewLayer的高度，后面是1-点击位置的x/PreviewLayer的宽度
+
+     */
+    CGPoint focusPoint = CGPointMake(point.y/size.height, 1-point.x/size.width);
+    NSError *error;
+    
+    
+    if ([_device lockForConfiguration:&error]) {
         //对焦模式和对焦点
-        if ([device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-            [device setFocusPointOfInterest:focusPoint];
-            [device setFocusMode:AVCaptureFocusModeAutoFocus];
+        if ([_device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            [_device setFocusPointOfInterest:focusPoint];
+            [_device setFocusMode:AVCaptureFocusModeAutoFocus];
         }
         //曝光模式和曝光点
-        if ([device isExposureModeSupported:AVCaptureExposureModeAutoExpose ]) {
-            [device setExposurePointOfInterest:focusPoint];
-            [device setExposureMode:AVCaptureExposureModeAutoExpose];
+        if ([_device isExposureModeSupported:AVCaptureExposureModeAutoExpose ]) {
+            [_device setExposurePointOfInterest:focusPoint];
+            [_device setExposureMode:AVCaptureExposureModeAutoExpose];
         }
         
-        [device unlockForConfiguration];
+        [_device unlockForConfiguration];
         //设置对焦动画
         _focusImageView.center = point;
         _focusImageView.hidden = NO;
@@ -546,6 +588,7 @@
         }];
     }
 }
+#pragma mark -- 分段控制器切换SessionPreset
 
 - (IBAction)captureSessionPreset:(UISegmentedControl *)sender {
     LOG(@"%d",sender.selectedSegmentIndex);

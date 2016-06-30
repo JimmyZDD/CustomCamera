@@ -8,7 +8,12 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+#import "MyCameraController.h"
+
+@interface ViewController () {
+    BOOL isManualFocus;
+    BOOL isPreviewImg;
+}
 
 @end
 
@@ -29,6 +34,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
+- (IBAction)switchFocusMode:(UISwitch *)sender {
+    isManualFocus = sender.on;
+    isPreviewImg = sender.on;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -36,8 +45,13 @@
 }
 - (IBAction)gotoCamera:(UIBarButtonItem *)sender {
     
-    
-    
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"camera"]) {
+        MyCameraController *cameraController = segue.destinationViewController;
+        cameraController.isManualFocus = isManualFocus;
+        cameraController.isPreviewImg = isPreviewImg;
+    }
 }
 
 @end
