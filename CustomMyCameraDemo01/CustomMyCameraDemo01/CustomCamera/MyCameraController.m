@@ -12,9 +12,26 @@
 
 #define kMainScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kMainScreenHeight  [UIScreen mainScreen].bounds.size.height
+/**
+ *  宏一个简单的警告框
+ *
+ *  @param title 提示内容
+ *
+ *  @return nil
+ */
 #define ShowAlert(title) [[[UIAlertView alloc] initWithTitle:@"提示" message:title delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show]
+// 自定义Log信息
+#ifdef DEBUG
+#define LOG(...) NSLog(__VA_ARGS__);
+#define LOG_METHOD NSLog(@"%s", __func__);
+#else
+#define LOG(...);
+#define LOG_METHOD;
+#endif
 
-@interface MyCameraController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVCaptureMetadataOutputObjectsDelegate>
+@interface MyCameraController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVCaptureMetadataOutputObjectsDelegate> {
+    UIView *imgView;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 
@@ -29,7 +46,10 @@
  *
  */
 @property (nonatomic, strong) AVCaptureSession *session;
-
+/**
+ *  AVMediaTypeVideo
+ */
+@property (nonatomic, strong) AVCaptureDevice *device;
 /**
  *  input
  */
@@ -52,6 +72,10 @@
  */
 @property (nonatomic, strong) UIImageView *faceImageView;
 
+/**
+ *  显示缩放比例
+ */
+@property (nonatomic, retain) UILabel *scaleLabel;
 
 /**
  *  previewLayer
@@ -98,7 +122,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     
     // 开启 session
     if (self.session) [self.session startRunning];
@@ -124,8 +148,10 @@
     [self initfocusImageWithParent:_preview];
     
     if (_canFaceRecognition) {
-//        [self initFaceImageWithParent:_preview];
+        //        [self initFaceImageWithParent:_preview];
     }
+    
+    [self initScaleLabel];
 }
 
 #pragma mark -- 配置相机相关组件
@@ -139,6 +165,18 @@
     self.sessionQueue = sessionQueue;
 }
 
+- (void)initScaleLabel {
+    self.scaleLabel = [[UILabel alloc]initWithFrame:CGRectMake(kMainScreenWidth - 70, 60, 60, 20)];
+    
+    _scaleLabel.hidden = YES;
+    
+    _scaleLabel.textColor = [UIColor orangeColor];
+    
+    _scaleLabel.text = @"1X";
+    
+    [_preview addSubview:_scaleLabel];
+}
+
 /**
  *  对焦的框
  */
@@ -149,7 +187,7 @@
     }
     self.focusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"touch_focus_x.png"]];
     self.focusImageView.hidden = YES;
-//    _focusImageView.backgroundColor = [UIColor redColor];
+    //    _focusImageView.backgroundColor = [UIColor redColor];
     _focusImageView.bounds = CGRectMake(0, 0, 100, 100);
     if (view.superview!=nil) {
         [self.view bringSubviewToFront:_focusImageView];
@@ -159,29 +197,29 @@
     }
 }
 /*
-
-**
+ 
+ **
  *  脸部识别的框
  *
  *  @param view
  *
-- (void)initFaceImageWithParent:(UIView *)view;
-{
-    if (self.faceImageView) {
-        return;
-    }
-    self.faceImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"face.png"]];
-    self.faceImageView.alpha = 0;
-    if (view.superview) {
-        [view.superview addSubview:self.faceImageView];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int32_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.isStartFaceRecognition = YES;
-        });
-    }else{
-        self.faceImageView = nil;
-    }
-}
-*/
+ - (void)initFaceImageWithParent:(UIView *)view;
+ {
+ if (self.faceImageView) {
+ return;
+ }
+ self.faceImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"face.png"]];
+ self.faceImageView.alpha = 0;
+ if (view.superview) {
+ [view.superview addSubview:self.faceImageView];
+ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int32_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+ self.isStartFaceRecognition = YES;
+ });
+ }else{
+ self.faceImageView = nil;
+ }
+ }
+ */
 
 #pragma mark -- 初始化所有对象
 /**
@@ -199,10 +237,13 @@
         [device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
     }
     [device unlockForConfiguration];
+    
+    self.device = device;
+    
     NSError *error = nil;
     self.videoInput = [[AVCaptureDeviceInput alloc]initWithDevice:device error:&error];
     if (error) {
-        NSLog(@"%@",error);
+        LOG(@"%@",error);
         ShowAlert(error.description);
     }
     
@@ -217,7 +258,7 @@
     if ([_session canAddOutput:_stillImageOutput])
         [_session addOutput:_stillImageOutput];
     if (_canFaceRecognition) {
-//        [self addMetadataOutputTypeFace];
+        //        [self addMetadataOutputTypeFace];
     }
     
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc]initWithSession:_session];
@@ -280,11 +321,37 @@
             ShowAlert(@"相册访问被限制或拒绝");
             return;
         }
+        /**
+         *  是否拍照后预览
+         */
+        if (1)
+        {
+            imgView = [[UIView alloc]initWithFrame:self.view.frame];
+            imgView.clipsToBounds = YES;
+            imgView.backgroundColor = [[UIColor darkGrayColor]colorWithAlphaComponent:0.2];
+            UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageWithData:jpegData]];
+            imageView.frame = imgView.frame;
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.frame = CGRectMake(20, 20, 40, 40);
+            btn.backgroundColor = [UIColor cyanColor];
+            [btn setTitle:@"返回" forState:UIControlStateNormal];
+            [btn addTarget:self action:@selector(disMissImgView) forControlEvents:UIControlEventTouchUpInside];
+            
+            [imgView addSubview:imageView];
+            [imgView addSubview:btn];
+            [self.view.window addSubview:imgView];
+        }
+        
         ALAssetsLibrary *library = [ALAssetsLibrary new];
         [library writeImageDataToSavedPhotosAlbum:jpegData metadata:(__bridge id)attachments completionBlock:^(NSURL *assetURL, NSError *error) {
             
         }];
     }];
+}
+
+- (void)disMissImgView {
+    [imgView removeFromSuperview];
 }
 
 #pragma mark -- 去相册
@@ -294,15 +361,11 @@
     UIImagePickerControllerSourceType sourcheType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.sourceType = sourcheType;
     picker.delegate = self;
-    picker.allowsEditing = NO;
+    picker.allowsEditing = YES;
     
     self.picker = picker;
 }
-- (void)imagePickerController:(UIImagePickerController *)picker
-didFinishPickingMediaWithInfo:(NSDictionary *)info;
-{
-    [picker dismissViewControllerAnimated:NO completion:nil];
-}
+
 - (IBAction)gotoAlbum:(id)sender {
     
     [self presentViewController:_picker animated:YES completion:nil];
@@ -329,6 +392,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
     
     for (AVCaptureDevice *dev in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
         // 从数组中取出 和 配置摄像头前后相同的AVCaptureDevice 然后配置DeviceInput 放到_session的input中
+        
+        LOG(@"dev:%d",dev.position);
+        
         if (dev.position == desiredPostion) {
             [_session beginConfiguration];
             
@@ -382,6 +448,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
     if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
         self.beginGestureScale = self.effectiveGestureScale;
     }
+    
+    _scaleLabel.hidden = NO;
+    
     return YES;
 }
 
@@ -391,7 +460,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
  *  @param pinchGesture 手势
  */
 - (void)handelPinchGesture:(UIPinchGestureRecognizer *)pinchGesture {
-    NSLog(@"pinchGesture.scale:%f",pinchGesture.scale);
+    LOG(@"pinchGesture.scale:%f",pinchGesture.scale);
+    
+    if (pinchGesture.state == UIGestureRecognizerStateEnded) {
+        _scaleLabel.hidden = YES;
+    }
     
     BOOL allTouchesAreOnThePreviewLayer = YES;
     
@@ -421,7 +494,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
             _effectiveGestureScale = maxScaleAndCropFactor;
         }
         
-        NSLog(@"%f---%f***%f",_beginGestureScale,_effectiveGestureScale,maxScaleAndCropFactor);
+        LOG(@"%f---%f***%f",_beginGestureScale,_effectiveGestureScale,maxScaleAndCropFactor);
+        
+        _scaleLabel.text = [NSString stringWithFormat:@"%.2fX",_effectiveGestureScale];
         
         [CATransaction begin];
         [CATransaction setAnimationDuration:.025];
@@ -435,13 +510,15 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
         CGPoint point = [touch locationInView:_preview];
         [self focusAtPoint:point];
     }
+    
+    
 }
 - (void)focusAtPoint:(CGPoint)point{
     CGSize size = self.view.bounds.size;
     CGPoint focusPoint = CGPointMake( point.y /size.height ,1-point.x/size.width );
     NSError *error;
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-
+    
     if ([device lockForConfiguration:&error]) {
         //对焦模式和对焦点
         if ([device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
@@ -471,7 +548,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
 }
 
 - (IBAction)captureSessionPreset:(UISegmentedControl *)sender {
-    NSLog(@"%d",sender.selectedSegmentIndex);
+    LOG(@"%d",sender.selectedSegmentIndex);
     switch (sender.selectedSegmentIndex) {
         case 0:
             if ([_session canSetSessionPreset:AVCaptureSessionPresetHigh]) {
@@ -500,13 +577,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
