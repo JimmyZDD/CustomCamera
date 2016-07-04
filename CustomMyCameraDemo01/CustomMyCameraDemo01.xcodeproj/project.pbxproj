@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F89DDF751D23E09B002FB518 /* MyMovieRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = F89DDF741D23E09B002FB518 /* MyMovieRecordController.m */; };
+		F89DDF7A1D251DAA002FB518 /* MyVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F89DDF791D251DAA002FB518 /* MyVideoController.m */; };
+		F89DDF7D1D25F7FD002FB518 /* MPMoviePlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = F89DDF7C1D25F7FD002FB518 /* MPMoviePlayController.m */; };
+		F89DDF801D25FEA9002FB518 /* MyMovieWithAssetWriterController.m in Sources */ = {isa = PBXBuildFile; fileRef = F89DDF7F1D25FEA9002FB518 /* MyMovieWithAssetWriterController.m */; };
+		F89DDF821D26422C002FB518 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F89DDF811D26422C002FB518 /* Default-568h@2x.png */; };
+		F89DDF851D2646CD002FB518 /* BaseCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = F89DDF841D2646CD002FB518 /* BaseCapture.m */; };
 		F8F8FA811D235A7200BCE09F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F8FA801D235A7200BCE09F /* main.m */; };
 		F8F8FA841D235A7200BCE09F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F8FA831D235A7200BCE09F /* AppDelegate.m */; };
 		F8F8FA871D235A7200BCE09F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F8FA861D235A7200BCE09F /* ViewController.m */; };
@@ -18,8 +22,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F89DDF731D23E09B002FB518 /* MyMovieRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMovieRecordController.h; sourceTree = "<group>"; };
-		F89DDF741D23E09B002FB518 /* MyMovieRecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMovieRecordController.m; sourceTree = "<group>"; };
+		F89DDF781D251DAA002FB518 /* MyVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyVideoController.h; sourceTree = "<group>"; };
+		F89DDF791D251DAA002FB518 /* MyVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyVideoController.m; sourceTree = "<group>"; };
+		F89DDF7B1D25F7FD002FB518 /* MPMoviePlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMoviePlayController.h; sourceTree = "<group>"; };
+		F89DDF7C1D25F7FD002FB518 /* MPMoviePlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMoviePlayController.m; sourceTree = "<group>"; };
+		F89DDF7E1D25FEA9002FB518 /* MyMovieWithAssetWriterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMovieWithAssetWriterController.h; sourceTree = "<group>"; };
+		F89DDF7F1D25FEA9002FB518 /* MyMovieWithAssetWriterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMovieWithAssetWriterController.m; sourceTree = "<group>"; };
+		F89DDF811D26422C002FB518 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F89DDF831D2646CD002FB518 /* BaseCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCapture.h; sourceTree = "<group>"; };
+		F89DDF841D2646CD002FB518 /* BaseCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCapture.m; sourceTree = "<group>"; };
 		F8F8FA7C1D235A7200BCE09F /* CustomMyCameraDemo01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomMyCameraDemo01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8F8FA801D235A7200BCE09F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F8F8FA821D235A7200BCE09F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -48,6 +59,7 @@
 		F8F8FA731D235A7200BCE09F = {
 			isa = PBXGroup;
 			children = (
+				F89DDF811D26422C002FB518 /* Default-568h@2x.png */,
 				F8F8FA7E1D235A7200BCE09F /* CustomMyCameraDemo01 */,
 				F8F8FA7D1D235A7200BCE09F /* Products */,
 			);
@@ -66,6 +78,10 @@
 			children = (
 				F8F8FA821D235A7200BCE09F /* AppDelegate.h */,
 				F8F8FA831D235A7200BCE09F /* AppDelegate.m */,
+				F89DDF831D2646CD002FB518 /* BaseCapture.h */,
+				F89DDF841D2646CD002FB518 /* BaseCapture.m */,
+				F89DDF7B1D25F7FD002FB518 /* MPMoviePlayController.h */,
+				F89DDF7C1D25F7FD002FB518 /* MPMoviePlayController.m */,
 				F8F8FA961D235BC100BCE09F /* CustomCamera */,
 				F8F8FA851D235A7200BCE09F /* ViewController.h */,
 				F8F8FA861D235A7200BCE09F /* ViewController.m */,
@@ -91,8 +107,10 @@
 			children = (
 				F8F8FA971D235BD900BCE09F /* MyCameraController.h */,
 				F8F8FA981D235BD900BCE09F /* MyCameraController.m */,
-				F89DDF731D23E09B002FB518 /* MyMovieRecordController.h */,
-				F89DDF741D23E09B002FB518 /* MyMovieRecordController.m */,
+				F89DDF781D251DAA002FB518 /* MyVideoController.h */,
+				F89DDF791D251DAA002FB518 /* MyVideoController.m */,
+				F89DDF7E1D25FEA9002FB518 /* MyMovieWithAssetWriterController.h */,
+				F89DDF7F1D25FEA9002FB518 /* MyMovieWithAssetWriterController.m */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -156,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8F8FA8F1D235A7200BCE09F /* LaunchScreen.storyboard in Resources */,
+				F89DDF821D26422C002FB518 /* Default-568h@2x.png in Resources */,
 				F8F8FA8C1D235A7200BCE09F /* Assets.xcassets in Resources */,
 				F8F8FA8A1D235A7200BCE09F /* Main.storyboard in Resources */,
 			);
@@ -168,11 +187,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F89DDF801D25FEA9002FB518 /* MyMovieWithAssetWriterController.m in Sources */,
 				F8F8FA871D235A7200BCE09F /* ViewController.m in Sources */,
+				F89DDF7D1D25F7FD002FB518 /* MPMoviePlayController.m in Sources */,
 				F8F8FA841D235A7200BCE09F /* AppDelegate.m in Sources */,
 				F8F8FA991D235BD900BCE09F /* MyCameraController.m in Sources */,
+				F89DDF7A1D251DAA002FB518 /* MyVideoController.m in Sources */,
 				F8F8FA811D235A7200BCE09F /* main.m in Sources */,
-				F89DDF751D23E09B002FB518 /* MyMovieRecordController.m in Sources */,
+				F89DDF851D2646CD002FB518 /* BaseCapture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

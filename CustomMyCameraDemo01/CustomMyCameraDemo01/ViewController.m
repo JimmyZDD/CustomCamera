@@ -36,6 +36,8 @@
 }
 - (IBAction)switchFocusMode:(UISwitch *)sender {
     isManualFocus = sender.on;
+}
+- (IBAction)switchPerviewState:(UISwitch *)sender {
     isPreviewImg = sender.on;
 }
 

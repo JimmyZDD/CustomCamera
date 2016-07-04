@@ -19,25 +19,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="自动对焦" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFe-6b-qnc">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自动对焦" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFe-6b-qnc">
                                 <rect key="frame" x="33" y="130" width="109" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="109" id="M0H-lg-Eln"/>
+                                    <constraint firstAttribute="height" constant="28" id="ein-FW-lLH"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9BO-TJ-WBM">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9BO-TJ-WBM">
                                 <rect key="frame" x="169" y="128" width="51" height="31"/>
                                 <connections>
                                     <action selector="switchFocusMode:" destination="BYZ-38-t0r" eventType="valueChanged" id="Xie-N3-GvI"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="拍照预览" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10U-zF-jwY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="拍照预览" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10U-zF-jwY">
                                 <rect key="frame" x="33" y="204" width="109" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="109" id="G9J-Mu-1zr"/>
+                                    <constraint firstAttribute="height" constant="28" id="gec-P7-sQw"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ez-WY-Era">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ez-WY-Era">
                                 <rect key="frame" x="169" y="202" width="51" height="31"/>
                                 <connections>
                                     <action selector="switchPerviewState:" destination="BYZ-38-t0r" eventType="valueChanged" id="9h4-U8-aSR"/>
@@ -45,6 +53,16 @@
                             </switch>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9BO-TJ-WBM" firstAttribute="leading" secondItem="wFe-6b-qnc" secondAttribute="trailing" constant="27" id="5da-bi-SkP"/>
+                            <constraint firstItem="3ez-WY-Era" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="138" id="7mZ-KD-Xqf"/>
+                            <constraint firstItem="10U-zF-jwY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="13" id="8xS-ne-Cd1"/>
+                            <constraint firstItem="9BO-TJ-WBM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="64" id="HQf-Ck-zoc"/>
+                            <constraint firstItem="wFe-6b-qnc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="13" id="YG9-Bz-ObG"/>
+                            <constraint firstItem="3ez-WY-Era" firstAttribute="leading" secondItem="10U-zF-jwY" secondAttribute="trailing" constant="27" id="kDd-ly-Nd7"/>
+                            <constraint firstItem="wFe-6b-qnc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="66" id="pRu-sR-9ef"/>
+                            <constraint firstItem="10U-zF-jwY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="140" id="v1v-ry-hyp"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="yoC-Wb-ujB">
                         <rightBarButtonItems>
@@ -54,10 +72,14 @@
                                     <segue destination="oVI-Rz-onr" kind="show" identifier="camera" id="voU-18-yDY"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="       " id="lOP-pr-GxU"/>
                             <barButtonItem title="Record" id="egC-JV-ojr">
                                 <connections>
-                                    <segue destination="LDo-ny-PcH" kind="show" id="vf6-eK-gPb"/>
+                                    <segue destination="RUC-83-alF" kind="show" id="G1B-kG-Kom"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="AssetWriter" id="ho7-vh-qYK">
+                                <connections>
+                                    <segue destination="e1t-XF-dwW" kind="show" action="showDetailViewController:sender:" id="d2E-a1-r6L"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -65,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="350" y="-35"/>
+            <point key="canvasLocation" x="31" y="-50"/>
         </scene>
         <!--My Camera Controller-->
         <scene sceneID="bw5-U7-5zn">
@@ -79,38 +101,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qgO-CI-Hw5">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="返 回" id="D3f-T7-gOl">
-                                        <connections>
-                                            <action selector="backBarButtonClick:" destination="oVI-Rz-onr" id="a3e-lM-yK1"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lMh-K8-Uuq"/>
-                                    <barButtonItem title="前置摄像头" id="ZNH-fY-71X">
-                                        <connections>
-                                            <action selector="switchCameraPostion:" destination="oVI-Rz-onr" id="iua-la-cuF"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="0j9-Kh-glg"/>
-                                    <barButtonItem style="plain" id="l4I-H3-cmX">
-                                        <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="fF8-nw-d4e">
-                                            <rect key="frame" x="367" y="7" width="51" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <connections>
-                                                <action selector="switchPreviewOrientation:" destination="oVI-Rz-onr" eventType="valueChanged" id="i6h-EY-cpc"/>
-                                            </connections>
-                                        </switch>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="1qL-mx-FuG"/>
-                                    <barButtonItem title="闪光灯" id="ApS-bt-qOo">
-                                        <connections>
-                                            <action selector="flashButtonClick:" destination="oVI-Rz-onr" id="e3o-NQ-ce6"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-7y-yFj">
                                 <rect key="frame" x="0.0" y="171" width="600" height="200"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -147,19 +137,50 @@
                                     <barButtonItem width="9" style="plain" systemItem="fixedSpace" id="vVm-jb-Ymi"/>
                                 </items>
                             </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgO-CI-Hw5">
+                                <rect key="frame" x="0.0" y="91" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="返 回" id="D3f-T7-gOl">
+                                        <connections>
+                                            <action selector="backBarButtonClick:" destination="oVI-Rz-onr" id="a3e-lM-yK1"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lMh-K8-Uuq"/>
+                                    <barButtonItem title="前置摄像头" id="ZNH-fY-71X">
+                                        <connections>
+                                            <action selector="switchCameraPostion:" destination="oVI-Rz-onr" id="iua-la-cuF"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="0j9-Kh-glg"/>
+                                    <barButtonItem style="plain" id="l4I-H3-cmX">
+                                        <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="fF8-nw-d4e">
+                                            <rect key="frame" x="367" y="7" width="51" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <connections>
+                                                <action selector="switchPreviewOrientation:" destination="oVI-Rz-onr" eventType="valueChanged" id="i6h-EY-cpc"/>
+                                            </connections>
+                                        </switch>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="1qL-mx-FuG"/>
+                                    <barButtonItem title="闪光灯" id="ApS-bt-qOo">
+                                        <connections>
+                                            <action selector="flashButtonClick:" destination="oVI-Rz-onr" id="e3o-NQ-ce6"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="width" secondItem="nQe-T8-baI" secondAttribute="width" id="Dq1-qy-5RM"/>
+                            <constraint firstItem="4fv-7y-yFj" firstAttribute="width" secondItem="nQe-T8-baI" secondAttribute="width" id="B2U-ib-ocN"/>
+                            <constraint firstItem="s2E-05-TIe" firstAttribute="top" secondItem="nlp-bO-w7C" secondAttribute="bottom" id="Fxr-a4-j8F"/>
                             <constraint firstItem="4fv-7y-yFj" firstAttribute="top" secondItem="qgO-CI-Hw5" secondAttribute="bottom" id="G4A-Fi-KmC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qgO-CI-Hw5" secondAttribute="trailing" constant="-20" id="KGs-St-9aK"/>
-                            <constraint firstItem="s2E-05-TIe" firstAttribute="top" secondItem="nlp-bO-w7C" secondAttribute="bottom" id="Q8u-pH-UE1"/>
-                            <constraint firstItem="4fv-7y-yFj" firstAttribute="leading" secondItem="nQe-T8-baI" secondAttribute="leadingMargin" constant="-20" id="W2Y-n4-gSZ"/>
+                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="width" secondItem="nQe-T8-baI" secondAttribute="width" id="MQS-rE-xUa"/>
+                            <constraint firstItem="4fv-7y-yFj" firstAttribute="centerX" secondItem="nQe-T8-baI" secondAttribute="centerX" id="Xoc-Ul-ogs"/>
+                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="centerX" secondItem="nQe-T8-baI" secondAttribute="centerX" id="jVw-js-Zks"/>
                             <constraint firstItem="nlp-bO-w7C" firstAttribute="leading" secondItem="nQe-T8-baI" secondAttribute="leadingMargin" constant="-20" id="jzN-lB-8BY"/>
-                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="top" secondItem="uqa-rg-V01" secondAttribute="bottom" id="mh6-Tz-D63"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4fv-7y-yFj" secondAttribute="trailing" constant="-20" id="pDK-1z-z87"/>
+                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="top" secondItem="uqa-rg-V01" secondAttribute="bottom" id="nKd-sO-rHR"/>
                             <constraint firstItem="nlp-bO-w7C" firstAttribute="top" secondItem="4fv-7y-yFj" secondAttribute="bottom" id="s3w-sJ-r10"/>
-                            <constraint firstItem="qgO-CI-Hw5" firstAttribute="leading" secondItem="nQe-T8-baI" secondAttribute="leadingMargin" constant="-20" id="wWb-Ev-vsc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nlp-bO-w7C" secondAttribute="trailing" constant="-20" id="ybc-24-Opw"/>
                         </constraints>
                     </view>
@@ -172,115 +193,146 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kji-kI-Gt9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="994" y="15"/>
+            <point key="canvasLocation" x="1022" y="-35"/>
         </scene>
-        <!--My Movie Record Controller-->
-        <scene sceneID="vKm-pw-d3K">
+        <!--My Movie With Asset Writer Controller-->
+        <scene sceneID="cCV-CK-z15">
             <objects>
-                <viewController id="LDo-ny-PcH" customClass="MyMovieRecordController" sceneMemberID="viewController">
+                <viewController id="e1t-XF-dwW" customClass="MyMovieWithAssetWriterController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Zzf-2I-AP8"/>
-                        <viewControllerLayoutGuide type="bottom" id="4Zv-Ar-lTv"/>
+                        <viewControllerLayoutGuide type="top" id="mrI-89-yHl"/>
+                        <viewControllerLayoutGuide type="bottom" id="wbD-fa-QHG"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lXY-vd-77M" customClass="My">
+                    <view key="view" contentMode="scaleToFill" id="eFV-jp-emz">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWo-hN-G7P" userLabel="focusCursor">
-                                <rect key="frame" x="287" y="382" width="80" height="80"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wwX-gw-b3j" userLabel="viewContainer">
-                                <rect key="frame" x="0.0" y="40" width="600" height="369"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cw5-HH-MA0">
-                                <rect key="frame" x="0.0" y="477" width="600" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="POI-lv-NiU">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="返回" id="njS-Al-cNn">
+                                    <barButtonItem title="闪光的模式" id="os8-I2-6GD"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="FQL-z6-de7"/>
+                                    <barButtonItem title="开始录制" id="ZTz-Pr-9wv">
                                         <connections>
-                                            <action selector="backButtonClick:" destination="LDo-ny-PcH" id="MZS-hD-Jm0"/>
+                                            <action selector="recordBtnClick:" destination="e1t-XF-dwW" id="flz-do-oGb"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="5h2-5G-qgl"/>
-                                    <barButtonItem style="plain" id="eRD-W9-Skr">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NIi-5M-bSP" userLabel="takeButton">
-                                            <rect key="frame" x="270" y="0.0" width="60" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="1" green="0.5100471567" blue="0.24530558020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <state key="normal" title="录制视频"/>
-                                        </button>
+                                    <barButtonItem title="结束按钮" id="kCM-xC-OJG">
+                                        <connections>
+                                            <action selector="stopRecordBtnClick:" destination="e1t-XF-dwW" id="rHO-Vf-lum"/>
+                                        </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="uHZ-60-h36"/>
-                                    <barButtonItem style="plain" id="9SX-ww-DWA">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b4O-K0-0Rj">
-                                            <rect key="frame" x="505" y="7" width="75" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="切换摄像头"/>
-                                            <connections>
-                                                <action selector="toggleButtonClick:" destination="LDo-ny-PcH" eventType="touchUpInside" id="FgE-Yu-avM"/>
-                                            </connections>
-                                        </button>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dKX-d9-cnL"/>
+                                    <barButtonItem title="摄像头方向" id="hQ5-4W-4xQ"/>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tJR-aV-3Ix">
+                                <rect key="frame" x="0.0" y="200" width="600" height="514"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZH-kp-jXP">
+                                <rect key="frame" x="0.0" y="98" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="返回" id="IO2-HF-YOT">
+                                        <connections>
+                                            <action selector="backBtnClick:" destination="e1t-XF-dwW" id="0w0-GT-lam"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="eRP-RB-Ru9"/>
+                                    <barButtonItem title="播放Mov" id="xj0-J0-wxq">
+                                        <connections>
+                                            <action selector="playMovBtnClick:" destination="e1t-XF-dwW" id="LHx-nA-Hq9"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="kag-dj-EvV"/>
+                                    <barButtonItem title="播放Mp4" id="MLn-iz-0uB">
+                                        <connections>
+                                            <action selector="playMp4BtnClick:" destination="e1t-XF-dwW" id="M5T-c8-ZOa"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.78392627520000002" blue="0.69157196990000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="4Zv-Ar-lTv" firstAttribute="top" secondItem="Cw5-HH-MA0" secondAttribute="bottom" id="6JL-ge-nDN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wwX-gw-b3j" secondAttribute="trailing" constant="-20" id="B7r-cB-nn3"/>
-                            <constraint firstItem="wwX-gw-b3j" firstAttribute="bottom" secondItem="Cw5-HH-MA0" secondAttribute="bottom" id="GBq-J8-rIZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Cw5-HH-MA0" secondAttribute="trailing" constant="-20" id="NgA-Rb-VAr"/>
-                            <constraint firstItem="wwX-gw-b3j" firstAttribute="leading" secondItem="lXY-vd-77M" secondAttribute="leadingMargin" constant="-20" id="WHH-CS-956"/>
-                            <constraint firstItem="Cw5-HH-MA0" firstAttribute="leading" secondItem="lXY-vd-77M" secondAttribute="leadingMargin" constant="-20" id="psl-gB-ly9"/>
-                            <constraint firstItem="wwX-gw-b3j" firstAttribute="top" secondItem="Zzf-2I-AP8" secondAttribute="bottom" id="zcX-BI-QeX"/>
+                            <constraint firstItem="tJR-aV-3Ix" firstAttribute="width" secondItem="eFV-jp-emz" secondAttribute="width" id="13k-1J-kGo"/>
+                            <constraint firstItem="tJR-aV-3Ix" firstAttribute="top" secondItem="mrI-89-yHl" secondAttribute="bottom" constant="44" id="28G-GU-32K"/>
+                            <constraint firstItem="fZH-kp-jXP" firstAttribute="centerX" secondItem="eFV-jp-emz" secondAttribute="centerX" id="9ZB-NS-C13"/>
+                            <constraint firstItem="fZH-kp-jXP" firstAttribute="width" secondItem="eFV-jp-emz" secondAttribute="width" id="FVg-ob-glv"/>
+                            <constraint firstItem="POI-lv-NiU" firstAttribute="width" secondItem="eFV-jp-emz" secondAttribute="width" id="NzY-un-eee"/>
+                            <constraint firstItem="fZH-kp-jXP" firstAttribute="top" secondItem="mrI-89-yHl" secondAttribute="bottom" id="Xwe-4a-YAZ"/>
+                            <constraint firstItem="tJR-aV-3Ix" firstAttribute="centerX" secondItem="eFV-jp-emz" secondAttribute="centerX" id="a1u-0a-yMd"/>
+                            <constraint firstItem="POI-lv-NiU" firstAttribute="centerX" secondItem="eFV-jp-emz" secondAttribute="centerX" id="a9m-az-FhP"/>
+                            <constraint firstItem="POI-lv-NiU" firstAttribute="top" secondItem="tJR-aV-3Ix" secondAttribute="bottom" id="yuF-H1-6bF"/>
+                            <constraint firstItem="wbD-fa-QHG" firstAttribute="top" secondItem="POI-lv-NiU" secondAttribute="bottom" id="zgR-gF-WYB"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="focusCursor" destination="hWo-hN-G7P" id="Rlh-nw-FSu"/>
-                        <outlet property="takeButton" destination="NIi-5M-bSP" id="p1y-Fk-JEC"/>
-                        <outlet property="viewContainer" destination="wwX-gw-b3j" id="FQ3-Oc-qKi"/>
+                        <outlet property="preview" destination="tJR-aV-3Ix" id="7EO-ZY-PzX"/>
+                        <outlet property="topBar" destination="fZH-kp-jXP" id="8Rr-ST-H6E"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FU6-MD-OpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mnX-Q8-ftv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="838.5"/>
+            <point key="canvasLocation" x="-283" y="719"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="8dF-ey-qpo">
+        <!--My Video Controller-->
+        <scene sceneID="iAB-fy-I5y">
             <objects>
-                <viewController id="LAR-xz-Nr1" sceneMemberID="viewController">
+                <viewController id="RUC-83-alF" customClass="MyVideoController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pCd-1l-J0r"/>
-                        <viewControllerLayoutGuide type="bottom" id="hMT-ef-Xkj"/>
+                        <viewControllerLayoutGuide type="top" id="8QB-Y3-pQn"/>
+                        <viewControllerLayoutGuide type="bottom" id="OC6-Qb-AwZ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="a9f-FQ-tRG">
+                    <view key="view" contentMode="scaleToFill" id="T0H-D5-FgI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOv-ep-GE7">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="heightClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="87" height="400"/>
-                                </variation>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wwX-gw-b3j" userLabel="preView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="1" green="0.78392627520000002" blue="0.69157196990000003" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cw5-HH-MA0">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="返回" id="njS-Al-cNn">
+                                        <connections>
+                                            <action selector="backBtnClick:" destination="RUC-83-alF" id="7YL-5H-6Mt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="5h2-5G-qgl"/>
+                                    <barButtonItem title="Start" id="ZtI-QR-a82">
+                                        <connections>
+                                            <action selector="recordBtnClick:" destination="RUC-83-alF" id="jkg-pB-BgK"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="uHZ-60-h36"/>
+                                    <barButtonItem title="相册" id="i8A-0g-dHK">
+                                        <connections>
+                                            <action selector="albumBtnClick:" destination="RUC-83-alF" id="IlB-55-Nrj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="LOv-ep-GE7"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=compact">
-                            <mask key="subviews">
-                                <include reference="LOv-ep-GE7"/>
-                            </mask>
-                        </variation>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cw5-HH-MA0" firstAttribute="centerX" secondItem="T0H-D5-FgI" secondAttribute="centerX" id="92f-zT-efa"/>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="centerX" secondItem="T0H-D5-FgI" secondAttribute="centerX" id="OUm-4l-Xzn"/>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="width" secondItem="T0H-D5-FgI" secondAttribute="width" id="SiO-o4-iDT"/>
+                            <constraint firstItem="Cw5-HH-MA0" firstAttribute="width" secondItem="T0H-D5-FgI" secondAttribute="width" id="cTu-x5-r4a"/>
+                            <constraint firstItem="OC6-Qb-AwZ" firstAttribute="top" secondItem="Cw5-HH-MA0" secondAttribute="bottom" id="cms-we-5kR"/>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="bottom" secondItem="Cw5-HH-MA0" secondAttribute="bottom" id="mqP-vr-8Os"/>
+                            <constraint firstItem="wwX-gw-b3j" firstAttribute="top" secondItem="8QB-Y3-pQn" secondAttribute="bottom" constant="-64" id="pQt-lw-Ji8"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="preView" destination="wwX-gw-b3j" id="t9i-uE-2Se"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XGT-be-bHl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aDv-T2-1Pe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="808" y="745"/>
+            <point key="canvasLocation" x="898" y="648"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E5Q-hl-HWN">

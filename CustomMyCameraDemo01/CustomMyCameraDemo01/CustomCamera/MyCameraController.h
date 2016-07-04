@@ -15,6 +15,7 @@
  */
 @property (nonatomic, assign) BOOL canFaceRecognition;
 
+@property (nonatomic,copy) void (^faceRecognitonCallBack)(CGRect);
 /**
  *  是否开启手动对焦 （默认自动）
  */

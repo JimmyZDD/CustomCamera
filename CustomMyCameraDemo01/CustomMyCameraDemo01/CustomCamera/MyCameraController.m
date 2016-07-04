@@ -29,7 +29,7 @@
 #define LOG_METHOD;
 #endif
 
-@interface MyCameraController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVCaptureMetadataOutputObjectsDelegate> {
+@interface MyCameraController ()<UIGestureRecognizerDelegate,  AVCaptureMetadataOutputObjectsDelegate> {
     UIView *imgView;
 }
 
@@ -70,7 +70,7 @@
 /**
  *  人脸识别框
  */
-@property (nonatomic, strong) UIImageView *faceImageView;
+@property (nonatomic, strong) UIView *faceCircleView;
 
 /**
  *  显示缩放比例
@@ -117,9 +117,7 @@
 {
     self = [super init];
     if (self) {
-        self.isPreviewImg = YES;
-        self.isManualFocus = NO;
-    }
+         }
     return self;
 }
 
@@ -142,12 +140,17 @@
     if (self.session) [self.session startRunning];
 }
 
+- (void)awakeFromNib {
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(topToolBarFrameChange) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+    _isStartFaceRecognition  = YES;
+    self.isPreviewImg = YES;
+    self.isManualFocus = NO;
+    self.canFaceRecognition = YES;
     
     self.effectiveGestureScale = self.beginGestureScale = 1.0f;
     
@@ -163,10 +166,8 @@
     
     [self initfocusImageWithParent:_preview];
     
-    if (_canFaceRecognition) {
-        //        [self initFaceImageWithParent:_preview];
-    }
-    
+    [self initFaceCircleView];
+        
     [self initScaleLabel];
 }
 
@@ -227,30 +228,15 @@
         self.focusImageView = nil;
     }
 }
-/*
- 
- **
- *  脸部识别的框
- *
- *  @param view
- *
- - (void)initFaceImageWithParent:(UIView *)view;
- {
- if (self.faceImageView) {
- return;
- }
- self.faceImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"face.png"]];
- self.faceImageView.alpha = 0;
- if (view.superview) {
- [view.superview addSubview:self.faceImageView];
- dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int32_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
- self.isStartFaceRecognition = YES;
- });
- }else{
- self.faceImageView = nil;
- }
- }
- */
+
+- (void)initFaceCircleView {
+    self.faceCircleView = [UIView new];
+    _faceCircleView.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0];
+    _faceCircleView.layer.borderColor = [[UIColor orangeColor] CGColor];
+    _faceCircleView.layer.borderWidth = 2;
+    [_preview addSubview:_faceCircleView];
+}
+
 
 #pragma mark -- 初始化所有对象
 /**
@@ -288,8 +274,10 @@
         [_session addInput:_videoInput];
     if ([_session canAddOutput:_stillImageOutput])
         [_session addOutput:_stillImageOutput];
-    if (_canFaceRecognition) {
-        //        [self addMetadataOutputTypeFace];
+    // 添加人脸识别MetadataOutput
+
+    if (_canFaceRecognition && [[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [self addMetadataOutputTypeFace];
     }
     
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc]initWithSession:_session];
@@ -297,20 +285,65 @@
     _previewLayer.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 88);
     _preview.layer.masksToBounds = YES;
     [_preview.layer addSublayer:_previewLayer];
+    
 }
 /**
  *  添加 可以检索从设备上支持人脸检测的avcapturemetadataoutput对象输出该类的实例。
  */
-//
-//- (void)addMetadataOutputTypeFace {
-//    AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
-//    if ([_session canAddOutput:metadataOutput]) {
-//        [_session addOutput:metadataOutput];
-//        [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
-//        [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-//        self.metadataOutput = metadataOutput;
-//    }
-//}
+
+- (void)addMetadataOutputTypeFace {
+    AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    if ([_session canAddOutput:metadataOutput]) {
+        [_session addOutput:metadataOutput];
+        [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
+        [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        self.metadataOutput = metadataOutput;
+    }
+}
+#pragma -mark AVCaptureMetadataOutputObjectsDelegate  人脸识别代理方法
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
+{
+    if (self.canFaceRecognition) {
+        /**
+         *  AVMetadataObject是一个抽象类，定义了由AVFoundation所使用的元数据对象的接口。
+         */
+        for(AVMetadataObject *metadataObject in metadataObjects) {
+#warning AVMetadataObjectTypeFace(人脸识别)
+            if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
+                [self showFaceImageWithFrame:metadataObject.bounds];
+            }
+        }
+    }
+}
+/**
+ *  人脸框的动画
+ *
+ *  @param rect
+ */
+- (void)showFaceImageWithFrame:(CGRect)rect
+{
+    if (self.isStartFaceRecognition) {
+        self.isStartFaceRecognition = NO;
+        
+        _faceCircleView.frame = CGRectMake(rect.origin.y * self.previewLayer.frame.size.width - 10, rect.origin.x * self.previewLayer.frame.size.height - 70, rect.size.width * self.previewLayer.frame.size.width * 2, rect.size.height * self.previewLayer.frame.size.height);
+        
+        _faceCircleView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+//        __weak typeof(self) weak = self;
+        LOG(@"_faceCircleView.frame%@",NSStringFromCGRect(_faceCircleView.frame));
+        [UIView animateWithDuration:0.3f animations:^{
+            _faceCircleView.alpha = 1;
+
+            _faceCircleView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:2.f animations:^{
+                _faceCircleView.alpha = 0;
+            } completion:^(BOOL finished) {
+                 self.isStartFaceRecognition = YES;
+            }];
+        }];
+    }
+}
+
 
 #pragma mark -- 拍照按钮点击事件
 
@@ -388,10 +421,8 @@
 #pragma mark -- 去相册
 - (void)setupImagePicker {
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    picker.view.backgroundColor = [UIColor orangeColor];
     UIImagePickerControllerSourceType sourcheType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.sourceType = sourcheType;
-    picker.delegate = self;
     picker.allowsEditing = YES;
     
     self.picker = picker;
